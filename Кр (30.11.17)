@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+
+
+int main() 
+{ 
+	int num,x,x1,x2,x3,x4,k;
+    cout << "Введите количество IР адресов в наборе" << endl;
+    cin >> num;
+    k=0;
+
+    int *IPmass = new int[num]; 
+    for (int i = 0; i < num; i++) 
+    {
+        cin>>x1;
+        cin>>x2;
+        cin>>x3;
+        cin>>x4;
+        x = x1 * 1000000000 + x2 * 1000000 + x3 * 1000 + x4;
+        IPmass[i] = x;
+        
+     
+    }
+    
+   cout<<"Введите IP"<<endl;
+   cin>>x1;
+   cin>>x2;
+   cin>>x3;
+   cin>>x4;
+   x = x1 * 1000000000 + x2 * 1000000 + x3 * 1000 + x4;
+   for (int i = 0; i < num; i++) 
+   {
+   	if (IPmass[i]==x)
+   	cout << "True";
+   	else 
+   	k=k+1;
+   }
+   if (k>=num)
+   cout << "False";
+   
+	
+
+	return 0;
+}
