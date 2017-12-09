@@ -45,7 +45,7 @@ void Qsort(Date_Name* a, int l, int r)
   };     
   int t;    
   Qsort(mas, 0, n);   
-  int k = 0;   
+  int k = 1;   
   int i=0;  
   int j=1;  
   for (i=0;i<=n;i++)  
