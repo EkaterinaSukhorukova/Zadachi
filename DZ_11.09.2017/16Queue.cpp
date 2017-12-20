@@ -1,91 +1,69 @@
-#include "stdafx.h"
-#include "conio.h"
-#include "iostream"
-#include "locale.h"
- 
-struct QUEUE
+#include <iostream>
+using namespace std;
+
+struct node
 {
-    int info;
-    QUEUE *next;
-}
- 
-int EmptyQ(QUEUE **first)
+	int data;
+	node* next;
+};
+
+struct queue
 {
-    if ((*first)==NULL)
-    return 1;
-    else
-    return 0;
-}
- 
-void AddQ(QUEUE **last)
+	node* tail = NULL;
+	void push (int new_data)
+	{
+		node* temp = new node;
+		temp -> data = new_data;
+		node* temp_data = tail;
+		if (tail != NULL)
+		{
+			while (tail -> next != NULL)
+			{
+				tail = tail -> next;
+			}
+			tail -> next = temp;
+			tail = temp_data; 
+		}
+		else
+		{
+			tail = temp;
+		}
+		temp -> next = NULL;
+	}
+
+
+	int pop()
+	{
+		if (tail == NULL)
+		{
+			cout << "OMG";
+			return 0;
+		}
+		node* temp = tail;
+		int temp_data = temp -> data;
+		tail = tail -> next;
+		delete temp;
+		return temp_data;
+	}
+
+	~queue()
+	{
+		while (tail != NULL)
+		{
+			node* temp = tail;
+			tail = tail -> next;
+			delete temp;
+		}
+	}
+};
+
+int main() 
 {
-    QUEUE *tmp = new QUEUE;
-    tmp->info=rand()%100;
-    tmp->next=NULL;
-    (*last)->next=tmp;
-    *last=tmp;
-}
- 
-void DelQ(QUEUE *first, QUEUE **last)
-{
-    QUEUE *tmp=first->next;
-    if(first->next==NULL)
-    *last=first;
-    delete tmp;
-}
- 
-void ShowQ(QUEUE *first)
-{
-    QUEUE *tmp=first->next;
-    while(tmp!=NULL)
-    {
-        printf("%d ", tmp->info);
-        tmp=tmp->next;
-    }
-}
- 
-void ClearQ(QUEUE **first, QUEUE **last)
-{
-    QUEUE *tmp;
-    while(first->next!=NULL)
-    {
-        tmp=first->next;
-        first->next = first->tmp;
-        delete tmp;
-    }
-    *last=first;
-}
- 
-int main()
-{
-    setlocale(LC_ALL, "rus");
-    QUEUE *first, *last;
-    int n;
-    char d;
-            AddQ(&last);
-            break;
- 
-            if (EmptyQ(first)==1)
-            printf("\nОчередь пустая \n");
-            else
-            {
-                DelQ(first,&last);
-                printf("\nЭлемент удален из очереди \n");
-            }
-            break;
- 
-            if (EmptyQ(first)==1)
-            printf("\nОчередь пустая \n");
-            else
-            {
-                printf("\nЭлементы очереди: ");
-                ShowQ(first);
-                printf("\n");
-            }
-            break;
- 
-            ClearQ(first,&last);
-            break;
-            default: printf("\nОшибка!\n"); break;
-    _getch();
+	queue Q;
+	Q.push (42);
+	Q.push (18);
+	cout << Q.pop()<< Q.pop()<< Q.pop();
+	Q.~queue();
+	system ("pause");
+	return 0;
 }
