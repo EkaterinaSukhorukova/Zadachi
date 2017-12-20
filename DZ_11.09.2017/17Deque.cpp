@@ -1,79 +1,87 @@
-#include <stdlib.h>
-#include <iostream.h>
- 
-struct Node
- {
-     int x;
-     Node *Next,*Prev;
- };
- 
- class List
- {
-     Node *Head,*Tail;
- public:
-     List():Head(NULL),Tail(NULL){};
-     ~List(); //Деструктор
-     void Show();
-     void Add(int x); 
- };
- 
-List::~List()
- {   
-     while (Head)
-     {
-         Tail=Head->Next;
-         delete Head;
-         Head=Tail;
-     }
- }
- 
- void List::Add(int x)
- {
-   Node *temp=new Node;
-   temp->Next=NULL;
-   temp->x=x;
- 
-   if (Head!=NULL)
-   {
-       temp->Prev=Tail;
-       Tail->Next=temp;
-       Tail=temp;
-   }
-   else 
-   {
-       temp->Prev=NULL;
-       Head=Tail=temp;
-   }
- }
- 
- void List::Show()
- {
-     Node *temp=Tail;
-     while (temp!=NULL) 
-     {
-        cout<<temp->x<<" ";
-        temp=temp->Prev;
-     }
-     cout<<"\n";
- 
-     temp=Head;
-     while (temp!=NULL)
-     {
-        cout<<temp->x<<" ";
-        temp=temp->Next;
-     }
-     cout<<"\n";
- }
- 
-int main ()
+#include <iostream>
+using namespace std;
+
+struct node
 {
- system("CLS");
- List lst; 
- lst.Add(100); 
- lst.Add(200);
- lst.Add(900);
- lst.Add(888);
- 
- lst.Show(); 
- system("PAUSE");
+	int data;
+	node* next;
+};
+
+struct deque
+{
+	node* tail = NULL;
+	node* head = NULL;
+	
+	void pushback (int new_data)
+	{
+		node* temp = new node;
+		temp -> data = new_data;
+		node* temp_data = tail;
+		if (tail != NULL)
+		{
+			tail = temp;
+			temp_data -> next = tail; 
+		}
+		else
+		{
+			tail = temp;
+			head = temp;
+		}
+		temp -> next = NULL;
+	}
+	
+	void pushfront (int new_data)
+	{
+		node* temp = new node;
+		temp -> data = new_data;
+		node* temp_data = head;
+		if (head != NULL)
+		{
+			head = temp;
+			head -> next = temp_data; 
+		}
+		else
+		{
+			head = temp;
+			tail = temp;
+			head -> next = NULL;
+		}
+	}	
+
+	int pop()
+	{
+		if (head == NULL)
+		{
+			cout << "OMG";
+			return 0;
+		}
+		int temp_data = head -> data;
+		node* temp = head;
+		head = head -> next;
+		delete temp;
+		return temp_data;
+	}
+
+	~deque()
+	{
+		while (head != NULL)
+		{
+			node* temp = head;
+			head = head -> next;
+			delete temp;
+		}
+	}
+};
+
+int main() 
+{
+	deque D;
+	D.pushback (42);
+	D.pushback (18);
+	D.pushfront (59);
+	D.pushfront (16);
+	cout << D.pop() << D.pop() << D.pop() << D.pop() << D.pop();
+	D.~deque();
+	system ("pause");
+	return 0;
 }
