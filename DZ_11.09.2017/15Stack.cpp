@@ -1,55 +1,56 @@
 #include <iostream>
 using namespace std;
 
-struct List
+struct node
 {
-	int x;
-    List *Next,*Head;
-};
-
-
-void Add(int x, List *&MyList) 
-{
-	List *temp=new List;
-	temp->x=x;
-	temp->Next=MyList->Head;
-	MyList->Head=temp;
+	int data;
+	node* next;
 }
 
-
-void Show(List *MyList)
+struct stack
 {
-	List *temp=MyList->Head;
-	while (temp!=NULL)
+	node* head = NULL;
+	
+	void push (int new_data)
 	{
-		cout<<temp->x<<" ";
-		temp=temp->Next;
-    }
+		node* temp = new node;
+		temp -> data = new_data;
+		temp -> next = head;
+		head = temp;
+	}
+	
+	int pop ()
+	{
+		if (head == NULL)
+		{
+			cout << "OMG";
+			return 0;
+		}
+		node* temp = head;
+		head = head -> next;
+		int temp_data = temp -> data;
+		delete temp;
+		return temp_data;
+	}
+
+	~stack ()
+	{
+		while (head != NULL)
+		{
+			node* temp = head;
+			head = head -> next;
+			delete temp;
+		}
+	}
 }
 
-
-void ClearList(List *MyList)
-    {
-    	while (MyList->Head!=NULL)
-    	{
-    		List *temp=MyList->Head->Next;
-    		delete MyList->Head;
-    		MyList->Head=temp;
-    	}
-    }
-
-int main()
+int main() 
 {
-
-
-    List *MyList=new List;
-    MyList->Head=NULL;
-    
-    for (int i=0;i<10;i++)
-	    Add(i,MyList);
-	Show(MyList);
-
-    ClearList(MyList);
-    delete MyList->Head;
-    delete MyList;
+	
+	stack S;
+	S.push (42);
+	S.push (18);
+	cout << S.pop()<< S.pop()<< S.pop();
+	
+	return 0;
 }
