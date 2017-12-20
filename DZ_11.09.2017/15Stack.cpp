@@ -46,11 +46,11 @@ struct stack
 
 int main() 
 {
-	
 	stack S;
 	S.push (42);
 	S.push (18);
 	cout << S.pop()<< S.pop()<< S.pop();
+	S.~stack();
 	
 	return 0;
 }
