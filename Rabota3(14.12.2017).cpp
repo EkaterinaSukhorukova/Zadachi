@@ -1,16 +1,25 @@
 #include <iostream>
+#include <algorithm>
+#include <iterator>
+#include <string>
 using namespace std;
 
 struct Kniga
 {
 	string avtor;
 	string name;
-	int ISBN;
+	long int ISBN;
 };
+
+long int StrToLInt (string& s)
+	{
+		 return (long int) atol(s.c_str());
+	}
+	
 
 void Qsort(Kniga* a, int l, int r)
 {
-	int x = a[l+(r-l)/2].ISBN; 
+	long int x = a[l+(r-l)/2].ISBN; 
 	int j = r; 
 	int i = l;
 	int t;  
@@ -37,20 +46,20 @@ void Qsort(Kniga* a, int l, int r)
 	Qsort(a, l, j-1); 
 };
 
-int Binary_Search (Kniga* a, int l, int r, int key)
+int Binary_Search (Kniga* a, int l, int r, long int key)
 {
 	int mid = 0;
-	while (1)
+	while (l<=r)
 	{
 		mid = l+(r-l)/2;
 		if (key < a[mid].ISBN)
 		{
-			Binary_Search (a, l, r, int key)
+			Binary_Search (a, l, mid-1, key);
 		}
 		
 		if (key > a[mid].ISBN)
 		{
-			l = mid + 1;
+			Binary_Search (a, mid+1, r, key);
 		}
 		
 		if (key = a[mid].ISBN)
@@ -58,43 +67,44 @@ int Binary_Search (Kniga* a, int l, int r, int key)
 			return mid;	
 		}
 		
-		if (l >= r)
-		{
-			return -1;	
-		}
-		
 	}
+	if (l>r)
+	return -1;
+
 }
 
 int main() 
 {
-	int num,x,x1,x2,x3,x4,k;
-//	cout << "Введите количество книг в наборе" << endl;
+	int num,k;
+	long int x;
+	string s1, s;
+	
 	cin >> num;
 	
 	Kniga *mas = new Kniga[num];
 	for (int i = 0; i < num; i++)
 	{
-	//	cout << "Введите имя автора";
+
 		cin >> mas[i].avtor;
-	//	cout << "Введите название книги";
+	
 		cin >> mas[i].name;
-	//	cout << "Введите ISBN (3-1-2-6)";
-		cin >> x1 >> x2 >> x3 >> x4;
-		x = x1 * 1000000000 + x2 * 100000000 + x3 * 1000000 + x4;
+
+		cin >> s1;
+		remove_copy(s1.begin(), s1.end(), back_inserter(s), '-');
+		x = StrToLInt (s);;
+		
 		mas[i].ISBN = x;
 	}
 	
 	Qsort(mas, 0, num-1);
-	
 	string savtor, sname;
-	// cout << "Введите имя автора";
 	cin >> savtor;
-	// cout << "Введите название книги";
 	cin >> sname;
-	// cout << "Введите ISBN";
-	cin >> x1 >> x2 >> x3 >> x4;
-	x = x1 * 1000000000 + x2 * 100000000 + x3 * 1000000 + x4;
+
+	cin >> s1;
+	remove_copy(s1.begin(), s1.end(), back_inserter(s), '-');
+	x = StrToLInt (s);;
+	
 	
 	k = -1;
 	k = Binary_Search (mas, 0, num, x);
