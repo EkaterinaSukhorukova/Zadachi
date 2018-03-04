@@ -3,10 +3,10 @@ myProg: main.o heapSort.o heapify.o printArray.o
 main.o: func.h main.cpp
 	g++ main.cpp -o main.o
 heapSort.o: func.h heapSort.cpp
-	g++ -c heapSort.cpp -o heapSort.o
+	g++ -c heapSort.cpp
 heapify.o: func.h heapify.cpp
-	g++ -c heapify.cpp -o heapify.o
+	g++ -c heapify.cpp
 printArray.o: func.h printArray.cpp
-	g++ -c printArray.cpp -o printArray.o
+	g++ -c printArray.cpp
 clean:
 	rm -f *.o
