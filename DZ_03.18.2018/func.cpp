@@ -1,3 +1,6 @@
+#include "quat.h"
+#include "func.h"
+
 template <typename T>
 quat<T> operator*(quat<T> &a, quat<T> &b)
 {
